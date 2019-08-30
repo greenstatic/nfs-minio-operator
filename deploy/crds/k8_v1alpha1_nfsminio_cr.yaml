@@ -1,0 +1,12 @@
+apiVersion: k8.krmelj.xyz/v1alpha1
+kind: NFSMinio
+metadata:
+  name: nfsminio-foo
+spec:
+  # username needs to be at least 3 characters long! (because we set it as the access key of Minio)
+  username: public
+  nfs:
+    server: example.com
+    path: /home/foo
+    readOnly: false
+  domain: foo.example.net

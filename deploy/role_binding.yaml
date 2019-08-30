@@ -1,0 +1,11 @@
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: nfs-minio-operator
+subjects:
+- kind: ServiceAccount
+  name: nfs-minio-operator
+roleRef:
+  kind: Role
+  name: nfs-minio-operator
+  apiGroup: rbac.authorization.k8s.io
