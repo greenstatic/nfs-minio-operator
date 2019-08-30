@@ -40,7 +40,7 @@ The new secret key MUST be between 8-40 characters (Minio limitation).
 Changing the access key is currently not supported.
 
 ## Deployment
-TODO
+Ensure you have RBAC enabled, then run the following:
 
 ```bash
 kubectl create -f deploy/crds/k8_v1alpha1_nfsminio_crd.yaml
@@ -49,6 +49,8 @@ kubectl create -f deploy/role.yaml
 kubectl create -f deploy/role_binding.yaml
 kubectl create -f deploy/operator.yaml
 ```
+
+Check to see if the `nfs-minio-operator` deployment is running (`kubectl get deployments`).
 
 ## Devlopment
 ### Dependencies
