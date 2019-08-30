@@ -5,7 +5,7 @@ A Kubernetes operator to access your NFS data using Minio's S3 compatible API.
 
 By defining a simple NFSMinio YAML file (see bellow) we create the necessary deployment, service, ingress and NFS connectivity for you.
 
-**NFSMinio YAML Configuration File**
+**Sample NFSMinio YAML Configuration File**
 ```yaml
 apiVersion: k8.krmelj.xyz/v1alpha1
 kind: NFSMinio
@@ -23,24 +23,10 @@ spec:
 
 On `http://foo.example.net` you will be able to access your data using Minio's web-based GUI or connect via any S3 API compliant library.
 
-The **access key is the username** and the **secret key** is a **randomly generated**.
-You can access it by reading the secret (the secret is named the same as the `NFSMinio`
-object.
+## Installation
+Clone this repository onto a machine that has kubectl connectivity with your Kubernetes cluster.
 
-```bash
-# replace nfsminio-foo with your NFSMinio name value
-kubectl get secret nfsminio-foo --template={{.data.secretKey}} | base64 --decode
-```
-
-If you wish you can also edit the secret key in the secret object.
-This will restart the Minio server in order to apply the new secret key.
-The new secret key MUST be between 8-40 characters (Minio limitation).
-
-
-Changing the access key is currently not supported.
-
-## Deployment
-Ensure you have RBAC enabled, then run the following:
+Ensure you have RBAC enabled on the cluster, then run the following:
 
 ```bash
 kubectl create -f deploy/crds/k8_v1alpha1_nfsminio_crd.yaml
@@ -51,6 +37,28 @@ kubectl create -f deploy/operator.yaml
 ```
 
 Check to see if the `nfs-minio-operator` deployment is running (`kubectl get deployments`).
+
+## Usage & Configuration
+N different users mean n different YAML files.
+Each user will get their own Minio instance (with root access) on their own domain.
+
+You can copy the NFSMinio configuration [above](#nfs-minio-operator) or copy the one in `deploy/crds/k8_v1alpha1_nfsminio_cr.yaml`.
+
+The **access key is the username** and the **secret key** is a **randomly generated** string.
+You can access it by reading the secret (the secret is named the same as the `NFSMinio` object.
+
+```bash
+# replace nfsminio-foo with your NFSMinio name value
+kubectl get secret nfsminio-foo --template={{.data.secretKey}} | base64 --decode
+```
+
+If you wish you can also change the secret key in the secret object.
+This will restart the Minio server in order to apply the new secret key.
+The new secret key MUST be between 8-40 characters (Minio limitation).
+
+Changing the access key is currently not supported.
+
+To view all NFSMinio objects run: `kubectl get nfsminios`.
 
 ## Devlopment
 ### Dependencies
