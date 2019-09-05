@@ -16,12 +16,14 @@ type NFSMinioSpec struct {
 	Username string `json:"username"`
 	NFS NFSMinioSpecNFS `json:"nfs"`
 	Domain string `json:"domain"`
+
+	TlsSecretName string `json:"tlsSecretName,omitempty"`
 }
 
 type NFSMinioSpecNFS struct {
 	Server string `json:"server"`
 	Path string `json:"path"`
-	ReadOnly bool `json:"readOnly"`
+	ReadOnly bool `json:"readOnly,omitempty"`
 }
 
 // NFSMinioStatus defines the observed state of NFSMinio

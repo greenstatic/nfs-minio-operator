@@ -42,8 +42,9 @@ spec:
               required:
               - server
               - path
-              - readOnly
               type: object
+            tlsSecretName:
+              type: string
             username:
               description: 'INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
                 Important: Run "operator-sdk generate k8s" to regenerate code after

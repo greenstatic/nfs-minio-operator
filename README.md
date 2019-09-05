@@ -21,6 +21,8 @@ spec:
     path: /home/foo
     readOnly: false
   domain: foo.example.net
+  # This is the Secret that contains the TLS certificate credentials (usually named `<DOMAIN-tls` by cert-manager
+  tlsSecretName: foo.example.net-tls
 ```
 
 On `http://foo.example.net` you will be able to access your data using Minio's web-based GUI or connect via any S3 API compliant library.

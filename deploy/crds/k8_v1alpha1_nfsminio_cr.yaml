@@ -10,3 +10,4 @@ spec:
     path: /home/foo
     readOnly: false
   domain: foo.example.net
+  tlsSecretName: foo.example.net-tls

@@ -84,6 +84,12 @@ func schema_pkg_apis_k8_v1alpha1_NFSMinioSpec(ref common.ReferenceCallback) comm
 							Format: "",
 						},
 					},
+					"tlsSecretName": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
 				},
 				Required: []string{"username", "nfs", "domain"},
 			},

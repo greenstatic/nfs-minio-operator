@@ -410,6 +410,17 @@ func (r *ReconcileNFSMinio) ingressForNFSMinio(m *k8v1alpha1.NFSMinio) *v1beta1.
 		},
 	}
 
+	if m.Spec.TlsSecretName != "" {
+		service.Spec.TLS = []v1beta1.IngressTLS{
+			{
+				Hosts: []string{
+					m.Spec.Domain,
+				},
+				SecretName: m.Spec.TlsSecretName,
+			},
+		}
+	}
+
 	// Set NFSMinio instance as the owner and controller
 	controllerutil.SetControllerReference(m, service, r.scheme)
 	return service
