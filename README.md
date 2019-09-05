@@ -93,11 +93,10 @@ kubectl create -f deploy/service_account.yaml
 kubectl create -f deploy/role.yaml
 kubectl create -f deploy/role_binding.yaml
 kubectl create -f deploy/operator.yaml
-
-export OPERATOR_NAME="nfs-minio-operator"
 ```
 
 Then for testing the controller outside the cluster (you need connectivity with your Kubernetes cluster using kubectl) run:
 ```bash
+export OPERATOR_NAME="nfs-minio-operator"
 operator-sdk up local --namespace=default
 ```
