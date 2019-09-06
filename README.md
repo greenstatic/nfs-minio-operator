@@ -1,11 +1,13 @@
 # NFS Minio Operator
-A Kubernetes operator to access your NFS data using Minio's S3 compatible API.
+A Kubernetes operator to access your NFS data using Minio's S3 compatible API created using (The Operator Framework)[https://github.com/operator-framework].
 
 [![](https://img.shields.io/docker/pulls/greenstatic/nfs-minio-operator)](https://hub.docker.com/r/greenstatic/nfs-minio-operator)
 
 ![Simple diagram explaining how the operator works](docs/diagram.svg)
 
 By defining a simple NFSMinio YAML file (see bellow) we create the necessary deployment, service, ingress and NFS connectivity for you.
+
+The Docker image of the operator can be found on [Docker hub](https://hub.docker.com/r/greenstatic/nfs-minio-operator).
 
 **Sample NFSMinio YAML Configuration File**
 ```yaml

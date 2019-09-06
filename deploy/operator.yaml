@@ -16,7 +16,7 @@ spec:
       containers:
         - name: nfs-minio-operator
           # Replace this with the built image name
-          image: greenstatic/nfs-minio-operator:v0.0.1
+          image: greenstatic/nfs-minio-operator:latest
           command:
           - nfs-minio-operator
           imagePullPolicy: Always
