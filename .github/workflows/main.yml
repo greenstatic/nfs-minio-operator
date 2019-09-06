@@ -11,7 +11,7 @@ jobs:
       env:
         RELEASE_VERSION: v0.10.0
       run: curl -OJL https://github.com/operator-framework/operator-sdk/releases/download/${RELEASE_VERSION}/operator-sdk-${RELEASE_VERSION}-x86_64-linux-gnu
-    - name: Install the binary
+    - name: Install operator-sdk binary
       env:
         RELEASE_VERSION: v0.10.0
       run: chmod +x operator-sdk-${RELEASE_VERSION}-x86_64-linux-gnu && sudo mkdir -p /usr/local/bin/ && sudo cp operator-sdk-${RELEASE_VERSION}-x86_64-linux-gnu /usr/local/bin/operator-sdk && rm operator-sdk-${RELEASE_VERSION}-x86_64-linux-gnu
@@ -19,5 +19,8 @@ jobs:
       run: operator-sdk build greenstatic/nfs-minio-operatorexample/memcached-operator:latest # TODO: change tag
     - name: Login to Docker hub
       run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
     - name: Push image to Docker Hub
       run: docker push greenstatic/nfs-minio-operatorexample/memcached-operator:latest
