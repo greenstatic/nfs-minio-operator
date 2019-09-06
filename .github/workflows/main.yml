@@ -32,7 +32,7 @@ jobs:
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Push image to Docker Hub
-        run: docker push greenstatic/nfs-minio-operator:${GITHUB_SHA}
+      run: docker push greenstatic/nfs-minio-operator:${GITHUB_SHA}
 
     - name: Checking if tagged commit to push to Docker Hub
       run: |
