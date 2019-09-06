@@ -2,8 +2,8 @@ name: CI
 
 on:
   push:
-    branches:
-    - master
+    tags:
+    - v*
 
 jobs:
   build:
@@ -22,7 +22,9 @@ jobs:
       run: chmod +x operator-sdk-${RELEASE_VERSION}-x86_64-linux-gnu && sudo mkdir -p /usr/local/bin/ && sudo cp operator-sdk-${RELEASE_VERSION}-x86_64-linux-gnu /usr/local/bin/operator-sdk && rm operator-sdk-${RELEASE_VERSION}-x86_64-linux-gnu
 
     - name: Build Docker image
-      run: operator-sdk build greenstatic/nfs-minio-operator:${GITHUB_SHA}
+      run: |
+        operator-sdk build greenstatic/nfs-minio-operator:${REF##*/}
+        docker tag greenstatic/nfs-minio-operator:${REF##*/} greenstatic/nfs-minio-operator:latest
 
     - name: Login to Docker Hub
       run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
@@ -31,13 +33,6 @@ jobs:
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Push image to Docker Hub
-      run: docker push greenstatic/nfs-minio-operator:${GITHUB_SHA}
-
-    - name: Checking if tagged commit to push to Docker Hub
       run: |
-        if [[ "$GITHUB_REF" =~ "refs/tags/" ]]; then
-          docker tag greenstatic/nfs-minio-operator:${GITHUB_SHA} greenstatic/nfs-minio-operator:${REF##*/} &&
-          docker tag greenstatic/nfs-minio-operator:${GITHUB_SHA} greenstatic/nfs-minio-operator:latest &&
-          docker push greenstatic/nfs-minio-operator:${REF##*/} &&
-          docker push greenstatic/nfs-minio-operator:latest;
-        fi
+        docker push greenstatic/nfs-minio-operator:${REF##*/}
+        docker push greenstatic/nfs-minio-operator:latest
