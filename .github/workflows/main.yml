@@ -7,11 +7,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Clone operator-sdk git repository
-      run: go get -d github.com/operator-framework/operator-sdk
-    - name: Install
-      run: cd $GOPATH/src/github.com/operator-framework/operator-sdk && git checkout master && make tidy && make install
+    - name: Download operator-sdk
+      env:
+        RELEASE_VERSION: v0.10.0
+      run: curl -OJL https://github.com/operator-framework/operator-sdk/releases/download/${RELEASE_VERSION}/operator-sdk-${RELEASE_VERSION}-x86_64-linux-gnu
+    - name: Install the binary
+      env:
+        RELEASE_VERSION: v0.10.0
+      run: chmod +x operator-sdk-${RELEASE_VERSION}-x86_64-linux-gnu && sudo mkdir -p /usr/local/bin/ && sudo cp operator-sdk-${RELEASE_VERSION}-x86_64-linux-gnu /usr/local/bin/operator-sdk && rm operator-sdk-${RELEASE_VERSION}-x86_64-linux-gnu
     - name: Build Docker image
       run: operator-sdk build greenstatic/nfs-minio-operatorexample/memcached-operator:latest # TODO: change tag
+    - name: Login to Docker hub
+      run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
     - name: Push image to Docker Hub
       run: docker push greenstatic/nfs-minio-operatorexample/memcached-operator:latest
