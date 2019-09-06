@@ -1,5 +1,5 @@
 # NFS Minio Operator
-A Kubernetes operator to access your NFS data using Minio's S3 compatible API created using (The Operator Framework)[https://github.com/operator-framework].
+A Kubernetes operator to access your NFS data using Minio's S3 compatible API created using [The Operator Framework](https://github.com/operator-framework).
 
 [![](https://img.shields.io/docker/pulls/greenstatic/nfs-minio-operator)](https://hub.docker.com/r/greenstatic/nfs-minio-operator)
 
