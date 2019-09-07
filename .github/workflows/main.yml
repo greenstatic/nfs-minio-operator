@@ -23,8 +23,8 @@ jobs:
 
     - name: Build Docker image
       run: |
-        operator-sdk build greenstatic/nfs-minio-operator:${REF##*/}
-        docker tag greenstatic/nfs-minio-operator:${REF##*/} greenstatic/nfs-minio-operator:latest
+        operator-sdk build greenstatic/nfs-minio-operator:${GITHUB_REF##*/}
+        docker tag greenstatic/nfs-minio-operator:${GITHUB_REF##*/} greenstatic/nfs-minio-operator:latest
 
     - name: Login to Docker Hub
       run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
@@ -34,5 +34,5 @@ jobs:
 
     - name: Push image to Docker Hub
       run: |
-        docker push greenstatic/nfs-minio-operator:${REF##*/}
+        docker push greenstatic/nfs-minio-operator:${GITHUB_REF##*/}
         docker push greenstatic/nfs-minio-operator:latest
